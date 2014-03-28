@@ -1,8 +1,12 @@
 module.exports = function(obj){
-	if(undefined === obj.initialize){
-		return function(){};
+	var constructor = (obj.initialize === undefined)?
+			function(){} : obj.initialize;
+	for(var method in obj){
+		if (method !== 'initialize') {
+			constructor.prototype[method] = obj[method];
+		};
 	}
-  return obj.initialize;
+  return constructor;
 };
 
 
