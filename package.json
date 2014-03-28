@@ -1,0 +1,19 @@
+{
+  "name": "jsClass",
+  "version": "0.0.0",
+  "description": "js class",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "js",
+    "class"
+  ],
+  "author": "ycswaves",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.18.2"
+  }
+}
