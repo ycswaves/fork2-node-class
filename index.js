@@ -1,5 +1,5 @@
 module.exports = function(obj){
-  var constructor = (obj.initialize === undefined)?
+  var constructor = (typeof obj.initialize === 'undefined')?
     function(){} : obj.initialize;
   for(var method in obj){
     if (method !== 'initialize') {
