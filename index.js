@@ -8,14 +8,20 @@ module.exports = function(obj, parent) {
     //implement inheritance
     constructor.prototype = new parent();
     constructor.prototype.constructor = constructor;
-    constructor.prototype.constructor.__super__ = parent;
+    constructor.__super__ = parent;
 
     //implement 'super'
+    var currentClass = constructor;
     constructor.prototype.super = function() {
-      var argsArr = Array.prototype.slice.call(arguments, 1);
+      var originalClass = constructor;
+      currentClass = currentClass.__super__; // at which point current class becomes parent class
+      var superFn = currentClass.prototype[arguments[0]]
+        , argsArr = Array.prototype.slice.call(arguments, 1);
 
-      if(typeof parent.prototype[arguments[0]] === 'function'){
-        return parent.prototype[arguments[0]].apply(this, argsArr);
+      if(typeof superFn === 'function'){
+        var result = superFn.apply(this, argsArr); // here 'this' refers to parent of current class
+        currentClass = originalClass; // to make 'this' refer back to orignal constructor
+        return result;
       }
     }
   } else {
@@ -27,10 +33,6 @@ module.exports = function(obj, parent) {
       constructor.prototype[method] = obj[method];
     }
   }
-
-
-
-
 
   return constructor;
 };
